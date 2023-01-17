@@ -6,7 +6,7 @@
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:15:40 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/01/17 20:21:46 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/01/17 21:25:23 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,13 +21,13 @@
 # include "printf/ft_printf.h"
 # include "libft/libft.h"
 
-# define HEIGHT       1000
+# define HEIGHT         1000
 # define WIDTH          1000
 # define DEFAULT_ZOOM   10
 # define MAX_ITER       100
-# define COLOR_FACT     5
-# define COLOR_FACT2    240
-# define COLOR_FACT3    30
+# define COLOR_FACT     6
+# define COLOR_FACT2    230
+# define COLOR_FACT3    25
 
 int magnitude(int real, int imag);
 double complex	convert(int x, int y);

@@ -6,28 +6,38 @@
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:02:02 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/01/17 20:11:57 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/01/17 21:31:43 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract_ol.h"
 
-unsigned int	colormagic(int i, double x, double y)
-{
-	unsigned int	color;
-	double			magic;
-	double			i2;
-	unsigned char	c;
-	unsigned char	c1;
-	unsigned char	c2;
+// unsigned int get_color(int i){
+//     if (i == 100) {
+//         return 0; // black color
+//     }
+//     return (unsigned char)(i * 2.55);
+// }
+struct RGB {
+    unsigned char r;
+    unsigned char g;
+    unsigned char b;
+};
 
-	magic = sqrt(x*x + y*y);
-	i2 = i + 1 - (log(2) / magic) / log(2);
-	c = (unsigned char)(sin(0.026 * i2 + COLOR_FACT) * COLOR_FACT2 + COLOR_FACT3);
-	c1 = (unsigned char)(sin(0.023 * i2 + COLOR_FACT-1) * COLOR_FACT2 + COLOR_FACT3);
-	c2 = (unsigned char)(sin(0.01 * i2 + COLOR_FACT-2) * COLOR_FACT2 + COLOR_FACT3);
-	color = (c << 16) + (c1 << 8) + (c2 + 255);
-	return (color);
+unsigned int get_color(int i) {
+    struct RGB color;
+	unsigned int c  = 0;
+    if (i == MAX_ITER) {
+        color.r = 0;
+        color.g = 0;
+        color.b = 0;
+    } else {
+        color.b = (unsigned char)(i * 2.55);
+        color.r = (unsigned char)(100 - (i * 2.55));
+        color.g = (unsigned char)(i * 5);
+    }
+	c += (color.r << 16) + (color.g << 8) + color.b;
+    return c;
 }
 
 int	main(void)
@@ -62,13 +72,13 @@ int	main(void)
 			z = convert(i, j);
 			// printf("mag :%d x :%f y :%f \n", magnitude((int)creal(z), (int)cimag(z)), creal(z), cimag(z));
 			int iter = count_iter_mand(z);
-			unsigned int color = colormagic(iter, creal(z), cimag(z));
-			// mlx_pixel_put(mlx_ptr, window_ptr, i, j, color);
-/*=======================================   julia   ===================================*/
-			double complex fix = CMPLX(0.10, -1.465);
-			iter = count_iter_jul(z, fix);
-			color = colormagic(iter, creal(z), cimag(z));
+			unsigned int color = get_color(iter);
 			mlx_pixel_put(mlx_ptr, window_ptr, i, j, color);
+/*=======================================   julia   ===================================*/
+			// double complex fix = -0.5;
+			// iter = count_iter_jul(z, fix);
+			// color = get_color(iter);
+			// mlx_pixel_put(mlx_ptr, window_ptr, i, j, color);
 		}
 	}
 	// mlx_key_hook(window_ptr, deal_key, (void *) 0);
