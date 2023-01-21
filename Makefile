@@ -6,7 +6,7 @@
 #    By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 14:24:42 by ahmaymou          #+#    #+#              #
-#    Updated: 2023/01/17 20:14:47 by ahmaymou         ###   ########.fr        #
+#    Updated: 2023/01/20 18:52:06 by ahmaymou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -42,7 +42,7 @@ libft_printf :
 	@cd printf && make re && mv libftprintf.a .. && cd ..
 
 prog :  $(OBJ) fract_ol.h
-	$(CC) $(INC_EXC) $(FLAGS) $(SRC) $(FRAMEWORK) $(OBJ) $(LIBS) -o $(EXEC)
+	$(CC) $(INC_EXC) $(FLAGS) $(SRC) $(FRAMEWORK) $(OBJ) $(LIBS) -g -o $(EXEC)
 	@rm -rf $(LIBS)
 bonus : $(NAME) bonus_prog
 
