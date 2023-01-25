@@ -6,7 +6,7 @@
 #    By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 14:24:42 by ahmaymou          #+#    #+#              #
-#    Updated: 2023/01/20 18:52:06 by ahmaymou         ###   ########.fr        #
+#    Updated: 2023/01/23 14:41:50 by ahmaymou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -20,7 +20,7 @@ FLAGS = -Wall -Werror -Wextra
 
 CC = cc
 
-LIBS = libft.a libftprintf.a
+LIBS = libft.a libftprintf.a libmlx.a
 
 EXEC = fractol
 EXEC_B = bonus
@@ -33,16 +33,17 @@ OBJ = $(SRCS_OBJ:.c=.o)
 all : $(NAME)
 
 %.o: %.c fract_ol.h
-	@$(CC) $(FLAGS) -c $< -o $@
+	@$(CC) $(FLAGS) -Imlx -c $< -o $@
 
 $(NAME) : libft_printf prog
 
 libft_printf :
 	@cd libft && make bonus && mv libft.a ..
 	@cd printf && make re && mv libftprintf.a .. && cd ..
+	@cd mlx && make && mv libmlx.a .. && cd ..
 
 prog :  $(OBJ) fract_ol.h
-	$(CC) $(INC_EXC) $(FLAGS) $(SRC) $(FRAMEWORK) $(OBJ) $(LIBS) -g -o $(EXEC)
+	$(CC) $(INC_EXC) $(FLAGS) $(SRC) -Imlx $(FRAMEWORK) $(OBJ) $(LIBS) -g -o $(EXEC)
 	@rm -rf $(LIBS)
 bonus : $(NAME) bonus_prog
 

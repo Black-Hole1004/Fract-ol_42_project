@@ -6,7 +6,7 @@
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:05:12 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/01/21 20:37:38 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/01/25 21:03:45 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,24 +19,23 @@ int magnitude(int real, int imag) {
 double complex	convert(int x, int y, t_mlx_info *info)
 {
 	double complex	cmp;
-
-	double a = ((double)x - info->mouse_x - WIDTH/2)/WIDTH/2 * info->zoom;
-	double b = -((double)y + info->mouse_y - HEIGHT/2)/HEIGHT/2 * info->zoom;
+    (void)info;
+    double a = (double)(x - info->mouse_x) * 4 / (WIDTH*info->zoom) + info->xmax * 400/WIDTH*info->zoom - 2;
+    double b = 2 - (double)(y + info->mouse_y) * 4 / (HEIGHT*info->zoom) - info->ymax* 400/WIDTH*info->zoom;
 	cmp = CMPLX(a, b);
-	// printf("x : %f y : %f\n", creal(cmp) , cimag(cmp));
 	return (cmp);
 }
 
-double complex	convert_odd(int x, int y, t_mlx_info *info)
-{
-	double complex	cmp;
+// double complex	convert_odd(int x, int y, t_mlx_info *info)
+// {
+// 	double complex	cmp;
 
-	int a = (x + info->mouse_x - WIDTH/2)/WIDTH/2 * info->zoom;
-	int b = -(y + info->mouse_y - HEIGHT/2)/HEIGHT/2 * info->zoom;
-	cmp = CMPLX(a, b);
-	// printf("x : %f y : %f\n", creal(cmp) , cimag(cmp));
-	return (cmp);
-}
+// 	int a = (x - WIDTH/2)/WIDTH/2 * info->zoom;
+// 	int b = -(y - HEIGHT/2)/HEIGHT/2 * info->zoom;
+// 	cmp = CMPLX(a, b);
+// 	// printf("x : %f y : %f\n", creal(cmp) , cimag(cmp));
+// 	return (cmp);
+// }
 
 int	deal_key(int key, void *param)
 {
@@ -47,76 +46,70 @@ int	deal_key(int key, void *param)
 	ft_printf("suiii\n");
 	return (0);
 }
-// #define XCENTER 0.0
-// #define YCENTER 0.0
-// #define XMIN -2.0
-// #define XMAX 2.0
-// #define YMIN -2
-// #define YMAX 2
 
-// int main() {
-//     double x, y;
-//     double xmin = XMIN + XCENTER;
-//     double xmax = XMAX + XCENTER;
-//     double ymin = YMIN + YCENTER;
-//     double ymax = YMAX + YCENTER;
-//     double xstep = (xmax - xmin) / WIDTH;
-//     double ystep = (ymax - ymin) / HEIGHT;
-//     int value;
-//     for (y = ymin; y < ymax; y += ystep) {
-//         for (x = xmin; x < xmax; x += xstep) {
-//             double complex c = x + y * I;
-void	draw(void *mlx_ptr, void *window_ptr, char type[], t_mlx_info *info)
+void	draw(char type[], t_mlx_info *info)
 {
-	double i = 0;
-	double j;
-    // double x, y;
-    // double xmin = XMIN + XCENTER;
-    // double xmax = XMAX + XCENTER;
-    // double ymin = YMIN + YCENTER;
-    // double ymax = YMAX + YCENTER;
-    // double xstep = (xmax - xmin) / WIDTH;
-    // double ystep = (ymax - ymin) / HEIGHT;
-	int iter;
-	float complex z = CMPLX(1, 2);
-	mlx_string_put(mlx_ptr, window_ptr, 0, 0, 0x0, type);
-	while (i++ < WIDTH)
-		{
-			j = -1;
-			while (++j < HEIGHT)
-			{
-				z = convert(i, j, info);
-				// z = CMPLX(i, j);
-				// unsigned int color = get_color(iter);
-				// printf("%.2f %.2f\n", creal(z), cimag(z));
-				unsigned int color = info->palette[info->p][iter % 11];
-				if (!strncmp(type, "mandelbrot", 11))
-				{
-					iter = count_iter_mand(z);
-					mlx_pixel_put(mlx_ptr, window_ptr, i, j, color);
-				}
-				// unsigned int color = palette[iter % 10];
-	/*=======================================   julia   ===================================*/
-				else{
-					double complex fix = CMPLX(-0.4, -0.6);
-					iter = count_iter_jul(z, fix);
-					mlx_pixel_put(mlx_ptr, window_ptr, i, j, color);
-				}
-			}
-		}
+    mlx_clear_window(info->mlx_ptr, info->window_ptr);
+    double i = 0;
+    double j;
+    int iter;
+    // printf("%d\n", info->line_length/4);
+    while (i < WIDTH)
+    {
+        j = 0;
+        while (j < HEIGHT)
+        {
+            double complex z = convert(i, j, info);
+            // if (iter == MAX_ITER)
+            //     iter = 0;
+            // int color = ((iter * 45) << 16) + ((iter * 14) << 8) + (iter * 6);
+            // unsigned int color = get_color(iter);
+            unsigned int color = info->palettes[info->p][iter % 11];
+            if (!strncmp(type, "mandelbrot", 11))
+                iter = count_iter_mand(z);
+            else
+                iter = count_iter_jul(z, info->fix);
+	        info->addr[(int)j * info->line_length + (int)i * (info->bits_per_pixel / 8)] = color * 14;
+            // my_mlx_pixel_put(info, i, j, color);
+            // mlx_pixel_put(info->mlx_ptr, info->window_ptr, i, j, color);
+            j++;
+        }
+        i++;
+    }
+	mlx_put_image_to_window(info->mlx_ptr, info->window_ptr, info->img, 0, 0);
 }
 
-void init(t_mlx_info *info, int **palettes)
+void    init_palettes(t_mlx_info *info)
+{
+    int **palettes = malloc(4 * sizeof(int*));
+	int palette4[] = {C41, BLACK, C43, C44, C45, C46, C47, C48,C49,C410,C411};
+	int palette1[] = {C11 ,BLACK, C13, C14, C15, C16, C17, C18,C19,C110,C111};
+	int palette2[] = {C21, BLACK, C23, C24, C25, C26, C27, C28,C29,C210,C211};
+	int palette3[] = {C31, BLACK, C33, C34, C35, C36, C37, C38,C39,C310,C311};
+    palettes[0] = palette1;
+    palettes[1] = palette2;
+    palettes[2] = palette3;
+    palettes[3] = palette4;
+    for (int i = 0;i < 4;i++)
+		for (int j = 0;j < 11;j++)
+			info->palettes[i][j] = palettes[i][j];
+    free(palettes);
+}
+
+void init(t_mlx_info *info)
 {
 	info->mlx_ptr = mlx_init();
 	info->window_ptr = mlx_new_window(info->mlx_ptr, WIDTH, HEIGHT, "fractol 42");
+    info->img =  mlx_new_image(info->mlx_ptr, WIDTH, HEIGHT);
+	info->addr = mlx_get_data_addr(info->img, &info->bits_per_pixel, &info->line_length,&info->endian);
+    init_palettes(info);
 	info->zoom = DEFAULT_ZOOM;
 	info->height = HEIGHT;
 	info->width = WIDTH;
 	info->mouse_x = 0;
 	info->mouse_y = 0;
-	for (int i = 0;i < 4;i++)
-		for (int j = 0;j < 11;j++)
-			info->palette[i][j] = palettes[i][j];
+    info->xmax = 0;
+    info->ymax = 0;
 	info->p = 0;
+    info->fix = CMPLX(0, 0);
 }
