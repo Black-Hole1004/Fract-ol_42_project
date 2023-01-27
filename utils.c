@@ -6,7 +6,7 @@
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:05:12 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/01/27 21:57:44 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/01/27 23:21:31 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,10 +53,10 @@ int	deal_key(int key, void *param)
 
 void	draw(char type[], t_mlx_info *info)
 {
-    double i;
-    double j;
-    int iter;
-    int color;
+    double  i;
+    double  j;
+    int     iter;
+    int     color;
     t_cmp   z;
     i = -1;
     mlx_clear_window(info->mlx_ptr, info->window_ptr);
@@ -69,7 +69,7 @@ void	draw(char type[], t_mlx_info *info)
             if (iter == MAX_ITER)
                 color = 0;
             else
-                color = iter * 25;
+                color = iter * LIGHTBLUE;
             // unsigned int color = get_color(iter);
             // unsigned int color = info->palettes[info->p][iter % 11];
             if (!strncmp(type, "mandelbrot", 11))

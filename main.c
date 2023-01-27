@@ -6,7 +6,7 @@
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:02:02 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/01/27 22:20:49 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/01/27 23:16:27 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,9 +49,9 @@ int mouse_scroll(int button, int x, int y, t_mlx_info *info)
 	mlx_clear_window(info->mlx_ptr, info->window_ptr);
 	
 	mouse_x = info->xmin
-		+ ((double)x * (info->xmax - info->xmin)) / WIDTH;
+		+ (x * (info->xmax - info->xmin)) / WIDTH;
 	mouse_y = info->ymin
-		+ ((double)y * (info->ymax - info->ymin)) / HEIGHT;
+		+ (y * (info->ymax - info->ymin)) / HEIGHT;
 	if (button == 4)
 	{
 		info->xmin = mouse_x + (info->xmin - mouse_x) / info->zoom;

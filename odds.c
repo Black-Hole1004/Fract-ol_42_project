@@ -6,57 +6,57 @@
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 17:03:15 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/01/27 15:22:26 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/01/27 23:13:46 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include"fract_ol.h"
 
-// int count_iter_burn(float complex c)
-// {
-// 	float complex new_z;
-// 	int iter = 0;
-// 	new_z = 0;
-// 	while (iter < MAX_ITER)
-// 	{
+int count_iter_burn(t_cmp c)
+{
+	t_cmp   new_z;
+    double  temp;
+	int iter = 0;
+	new_z.real = 0;
+    new_z.imag = 0;
+	while (iter < MAX_ITER)
+	{
+		if (magnitude(new_z.real, new_z.imag) > 4)
+			return (iter);
+        temp = new_z.real*new_z.real - new_z.imag*new_z.imag + c.real;
+        new_z.imag = fabs(2*new_z.real*new_z.imag) + c.imag; // abs returns the absolute value
+        new_z.real = temp;
+        // new_z.real = x;
+        // new_z.imag = y;
+		iter++;
+	}
+	return (MAX_ITER);
+}
 
-// 		if (magnitude((int)creal(new_z), (int)cimag(new_z)) > 2)
-// 			return (iter);
-//         double x = creal(new_z)*creal(new_z) - cimag(new_z)*cimag(new_z) + creal(c);
-//         double y = fabs(2*creal(new_z)*cimag(new_z)) + cimag(c); // abs returns the absolute value
-//         new_z = CMPLX(x, y);
-// 		// new_z = creal(new_z) + cpow(cimag(new_z), 2) + c;
-// 		iter++;
-// 	}
-// 	return (MAX_ITER);
-// }
-
-// void	draw_odd(void *mlx_ptr, void *window_ptr, char type[], t_mlx_info *info)
-// {
-// 	int i = 0;
-// 	int j;
-//     // double x, y;
-//     // double xmin = XMIN + XCENTER;
-//     // double xmax = XMAX + XCENTER;
-//     // double ymin = YMIN + YCENTER;
-//     // double ymax = YMAX + YCENTER;
-//     // double xstep = (xmax - xmin) / WIDTH;
-//     // double ystep = (ymax - ymin) / HEIGHT;
-// 	int iter;
-// 	float complex z = CMPLX(1, 2);
-// 	mlx_string_put(mlx_ptr, window_ptr, 0, 0, BLUE, type);
-// 	while (i++ < WIDTH)
-// 		{
-// 			j = -1;
-// 			while (++j < HEIGHT)
-// 			{
-// 				z = convert(i, j, info);
-// 				// z = CMPLX(i, j);
-// 				// unsigned int color = get_color(iter);
-// 				// printf("%.2f %.2f\n", creal(z), cimag(z));
-// 				unsigned int color = info->palette[0][iter % 10];
-// 				iter = count_iter_burn(z);
-// 				mlx_pixel_put(mlx_ptr, window_ptr, i, j, color);
-// 		}
-// }
-// }
+void	draw_burn(char type[], t_mlx_info *info)
+{
+	int     i = -1;
+	int     j;
+	int     iter = 0;
+	t_cmp   z;
+    // int     color;
+    (void)type;
+	// mlx_string_put(mlx_ptr, window_ptr, 0, 0, BLUE, type);
+	while (++i < WIDTH)
+		{
+			j = -1;
+			while (++j < HEIGHT)
+			{
+				z = convert(i, j, info);
+                // if (iter == MAX_ITER)
+                //     color = 0;
+                // else
+                //     color = 0XFFFFFF;
+                // printf("iter %d\n", iter);
+				iter = count_iter_burn(z);
+				unsigned int color = info->palettes[0][iter % 10];
+				mlx_pixel_put(info->mlx_ptr, info->window_ptr, i, j, color);
+		    }
+        }
+    mlx_put_image_to_window(info->mlx_ptr, info->window_ptr, info->data.img, 0, 0);
+}

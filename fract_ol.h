@@ -6,7 +6,7 @@
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:15:40 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/01/27 22:05:20 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/01/27 23:02:46 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -69,19 +69,19 @@ typedef struct s_mlx_info
 	t_data		data;
 }			t_mlx_info;
 
-void	my_mlx_pixel_put(t_mlx_info *data, int x, int y, int color);
-void	draw_odd(char type[], t_mlx_info *info);
-void	draw_first(void *mlx_ptr, void *window_ptr, char type[], t_mlx_info *info);
-int magnitude(double real, double imag);
-int deal_key(int key, void *param);
-int count_iter_jul(t_cmp c, t_cmp fix);
-int count_iter_mand(t_cmp c);
-unsigned int get_color(int i);
-t_cmp	convert(double x, double y, t_mlx_info *info);
-void	draw(char type[], t_mlx_info *info);
-void 	init(t_mlx_info *info);
-void	draw_burn(char type[], t_mlx_info *info);
-t_cmp	convert_odd(int x, int y, t_mlx_info *info);
-void    init_palettes(t_mlx_info *info);
+void			my_mlx_pixel_put(t_mlx_info *data, int x, int y, int color);
+void			draw_odd(char type[], t_mlx_info *info);
+void			draw_first(void *mlx_ptr, void *window_ptr, char type[], t_mlx_info *info);
+int 			magnitude(double real, double imag);
+int 			deal_key(int key, void *param);
+int 			count_iter_jul(t_cmp c, t_cmp fix);
+int 			count_iter_mand(t_cmp c);
+unsigned int 	get_color(int i);
+t_cmp			convert(double x, double y, t_mlx_info *info);
+void			draw(char type[], t_mlx_info *info);
+void 			init(t_mlx_info *info);
+void			draw_burn(char type[], t_mlx_info *info);
+t_cmp			convert_odd(int x, int y, t_mlx_info *info);
+void    		init_palettes(t_mlx_info *info);
 
 #endif
