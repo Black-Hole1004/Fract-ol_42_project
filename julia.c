@@ -6,23 +6,26 @@
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 18:14:41 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/01/17 18:25:25 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/01/27 21:56:55 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract_ol.h"
 
-int count_iter_jul(float complex c, float complex fix)
+int count_iter_jul(t_cmp c, t_cmp fix)
 {
-	float complex new_z;
+	t_cmp	new_z;
+	double	temp;
 	int iter = 0;
 
 	new_z = c;
 	while (iter < MAX_ITER)
 	{
-		if (magnitude((int)creal(new_z), (int)cimag(new_z)) > 2)
+		if (magnitude(new_z.real, new_z.imag) >= 2)
 			return (iter);
-		new_z = cpowf(new_z, 2) + fix;
+		temp = new_z.real;
+		new_z.real = new_z.real * new_z.real - new_z.imag * new_z.imag - fix.real;
+		new_z.imag = 2 * new_z.imag * temp + fix.imag;
 		iter++;
 	}
 	return (MAX_ITER);

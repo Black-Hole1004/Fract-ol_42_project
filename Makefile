@@ -6,7 +6,7 @@
 #    By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 14:24:42 by ahmaymou          #+#    #+#              #
-#    Updated: 2023/01/23 14:41:50 by ahmaymou         ###   ########.fr        #
+#    Updated: 2023/01/27 21:48:22 by ahmaymou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -43,7 +43,7 @@ libft_printf :
 	@cd mlx && make && mv libmlx.a .. && cd ..
 
 prog :  $(OBJ) fract_ol.h
-	$(CC) $(INC_EXC) $(FLAGS) $(SRC) -Imlx $(FRAMEWORK) $(OBJ) $(LIBS) -g -o $(EXEC)
+	$(CC) $(INC_EXC) $(FLAGS) $(SRC) -Imlx $(FRAMEWORK) $(OBJ) $(LIBS) -o $(EXEC)
 	@rm -rf $(LIBS)
 bonus : $(NAME) bonus_prog
 

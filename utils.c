@@ -6,23 +6,27 @@
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:05:12 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/01/25 21:03:45 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/01/27 21:57:44 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract_ol.h"
 
-int magnitude(int real, int imag) {
+int magnitude(double real, double imag)
+{
     return sqrt(real*real + imag*imag);
 }
 
-double complex	convert(int x, int y, t_mlx_info *info)
+t_cmp   convert(double x, double y, t_mlx_info *info)
 {
-	double complex	cmp;
+	t_cmp   cmp;
     (void)info;
-    double a = (double)(x - info->mouse_x) * 4 / (WIDTH*info->zoom) + info->xmax * 400/WIDTH*info->zoom - 2;
-    double b = 2 - (double)(y + info->mouse_y) * 4 / (HEIGHT*info->zoom) - info->ymax* 400/WIDTH*info->zoom;
-	cmp = CMPLX(a, b);
+    double a = info->xmin + ((double)(x) * (info->xmax - info->xmin)) / WIDTH;
+    double b = info->ymin + ((double)(y) * (info->ymax - info->ymin)) / HEIGHT;
+	cmp.real = a;
+    cmp.imag = b;
+    // info->offsetx = 0;
+    // info->offsety = 0;
 	return (cmp);
 }
 
@@ -49,34 +53,35 @@ int	deal_key(int key, void *param)
 
 void	draw(char type[], t_mlx_info *info)
 {
-    mlx_clear_window(info->mlx_ptr, info->window_ptr);
-    double i = 0;
+    double i;
     double j;
     int iter;
-    // printf("%d\n", info->line_length/4);
-    while (i < WIDTH)
+    int color;
+    t_cmp   z;
+    i = -1;
+    mlx_clear_window(info->mlx_ptr, info->window_ptr);
+    while (++i < 500)
     {
-        j = 0;
-        while (j < HEIGHT)
+        j = -1;
+        while (++j < 500)
         {
-            double complex z = convert(i, j, info);
-            // if (iter == MAX_ITER)
-            //     iter = 0;
-            // int color = ((iter * 45) << 16) + ((iter * 14) << 8) + (iter * 6);
+            z = convert(i, j, info);
+            if (iter == MAX_ITER)
+                color = 0;
+            else
+                color = iter * 25;
             // unsigned int color = get_color(iter);
-            unsigned int color = info->palettes[info->p][iter % 11];
+            // unsigned int color = info->palettes[info->p][iter % 11];
             if (!strncmp(type, "mandelbrot", 11))
                 iter = count_iter_mand(z);
             else
                 iter = count_iter_jul(z, info->fix);
-	        info->addr[(int)j * info->line_length + (int)i * (info->bits_per_pixel / 8)] = color * 14;
-            // my_mlx_pixel_put(info, i, j, color);
+            my_mlx_pixel_put(info, i, j, color);
             // mlx_pixel_put(info->mlx_ptr, info->window_ptr, i, j, color);
-            j++;
         }
-        i++;
     }
-	mlx_put_image_to_window(info->mlx_ptr, info->window_ptr, info->img, 0, 0);
+	mlx_put_image_to_window(info->mlx_ptr, info->window_ptr, info->data.img, 0, 0);
+    // mlx_string_put(info->mlx_ptr, info->window_ptr, 250, 30, BLUE, "mouse_x :30 mouse_y : 40");
 }
 
 void    init_palettes(t_mlx_info *info)
@@ -100,16 +105,18 @@ void init(t_mlx_info *info)
 {
 	info->mlx_ptr = mlx_init();
 	info->window_ptr = mlx_new_window(info->mlx_ptr, WIDTH, HEIGHT, "fractol 42");
-    info->img =  mlx_new_image(info->mlx_ptr, WIDTH, HEIGHT);
-	info->addr = mlx_get_data_addr(info->img, &info->bits_per_pixel, &info->line_length,&info->endian);
+    info->data.img =  mlx_new_image(info->mlx_ptr, 500, HEIGHT);
+	info->data.addr = mlx_get_data_addr(info->data.img, &info->data.bits_per_pixel, &info->data.line_length,&info->data.endian);
     init_palettes(info);
-	info->zoom = DEFAULT_ZOOM;
+	info->zoom = 1.2;
 	info->height = HEIGHT;
 	info->width = WIDTH;
-	info->mouse_x = 0;
-	info->mouse_y = 0;
-    info->xmax = 0;
-    info->ymax = 0;
+	info->offsetx = 0;
+	info->offsety = 0;
+    info->xmax = 2;
+    info->ymax = 2;
+    info->xmin = -2;
+    info->ymin = -2;
 	info->p = 0;
-    info->fix = CMPLX(0, 0);
+    // info->fix = CMPLX(0, 0);
 }
