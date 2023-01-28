@@ -6,7 +6,7 @@
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:05:12 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/01/27 23:21:31 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/01/28 19:25:06 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,102 +21,74 @@ t_cmp   convert(double x, double y, t_mlx_info *info)
 {
 	t_cmp   cmp;
     (void)info;
-    double a = info->xmin + ((double)(x) * (info->xmax - info->xmin)) / WIDTH;
-    double b = info->ymin + ((double)(y) * (info->ymax - info->ymin)) / HEIGHT;
+    double a = info->xmin + info->offsetx + ((double)(x) * (info->xmax - info->xmin)) / 800;
+    double b = info->ymin + info->offsety + ((double)(y) * (info->ymax - info->ymin)) / HEIGHT;
 	cmp.real = a;
     cmp.imag = b;
-    // info->offsetx = 0;
-    // info->offsety = 0;
 	return (cmp);
 }
 
-// double complex	convert_odd(int x, int y, t_mlx_info *info)
-// {
-// 	double complex	cmp;
-
-// 	int a = (x - WIDTH/2)/WIDTH/2 * info->zoom;
-// 	int b = -(y - HEIGHT/2)/HEIGHT/2 * info->zoom;
-// 	cmp = CMPLX(a, b);
-// 	// printf("x : %f y : %f\n", creal(cmp) , cimag(cmp));
-// 	return (cmp);
-// }
-
-int	deal_key(int key, void *param)
+void    draw_shape(t_mlx_info *info)
 {
-	(void) param;
-	(void) key;
-	// if (key == 1)
-	// 	mlx_destroy_window(param, param2);
-	ft_printf("suiii\n");
-	return (0);
+    mlx_clear_window(info->mlx_ptr, info->window_ptr);
+    draw_info(info);
+    if (!ft_strncmp(info->type, "mandelbrot", 11))
+        draw_man(info);
+    else if (!ft_strncmp(info->type, "julia", 6))
+        draw_julia(info);
+    else if (!ft_strncmp(info->type, "burningship", 12))
+        draw_burn(info);
+    else if (!ft_strncmp(info->type, "tricorn", 8))
+        draw_tricorn(info);
 }
 
-void	draw(char type[], t_mlx_info *info)
+void    put_strings(t_mlx_info *info)
 {
-    double  i;
-    double  j;
-    int     iter;
-    int     color;
-    t_cmp   z;
-    i = -1;
-    mlx_clear_window(info->mlx_ptr, info->window_ptr);
-    while (++i < 500)
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 30, YELLOW, "------------------------------");
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 50, YELLOW, "move up          : <w>");
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 90, YELLOW, "move left        : <a>");
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 130, YELLOW, "move right       : <d>");
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 170, YELLOW, "move down        : <s>");
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 190, YELLOW, "------------------------------");
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 210, YELLOW, "change colors    :");
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 250, YELLOW, "WHITE            : 1 ");
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 280, YELLOW, "LIGHTGREEN       : 2 ");
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 310, YELLOW, "ORANGE           : 3 ");
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 340, YELLOW, "RED              : 4");
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 370, YELLOW, "LIGHTBLUE        : 5");
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 400, YELLOW, "YELLOW           : 6");
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 430, YELLOW, "KHAKI            : 7");
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 460, YELLOW, "LIGHCYAN         : 8");
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 490, YELLOW, "GRAY             : 9");
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 505, YELLOW, "------------------------------");
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 525, YELLOW, "Julia            : j");
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 560, YELLOW, "Mandelbrot       : m");
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 600, YELLOW, "Burninship       : b");
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 640, YELLOW, "Tricorn          : t");
+}
+void    draw_info(t_mlx_info *info)
+{
+    char    *iters;
+    char    *itoa;
+    int i = 799;
+    int j = -1;
+    while (++i < WIDTH)
     {
         j = -1;
-        while (++j < 500)
-        {
-            z = convert(i, j, info);
-            if (iter == MAX_ITER)
-                color = 0;
-            else
-                color = iter * LIGHTBLUE;
-            // unsigned int color = get_color(iter);
-            // unsigned int color = info->palettes[info->p][iter % 11];
-            if (!strncmp(type, "mandelbrot", 11))
-                iter = count_iter_mand(z);
-            else
-                iter = count_iter_jul(z, info->fix);
-            my_mlx_pixel_put(info, i, j, color);
-            // mlx_pixel_put(info->mlx_ptr, info->window_ptr, i, j, color);
-        }
+        while (++j < HEIGHT)
+            mlx_pixel_put(info->mlx_ptr, info->window_ptr, i, j, BLUE);
     }
-	mlx_put_image_to_window(info->mlx_ptr, info->window_ptr, info->data.img, 0, 0);
-    // mlx_string_put(info->mlx_ptr, info->window_ptr, 250, 30, BLUE, "mouse_x :30 mouse_y : 40");
+    itoa = ft_itoa(info->iter_max);
+    iters = ft_strjoin("MAX ITERS        : ", itoa);
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 10, YELLOW, "Zoom             : mouse scroll");
+    put_strings(info);
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 660, YELLOW, "------------------------------");
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 680, YELLOW, "add/reduce iters : +/-");
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 710, YELLOW, "Reset params     : r");
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 740, YELLOW, iters);
+    free(iters);
+    free(itoa);
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 770, YELLOW, "Destroy window   : ESC");
+    // mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 130, YELLOW, "Zoom : mouse scroll");
 }
 
-void    init_palettes(t_mlx_info *info)
-{
-    int **palettes = malloc(4 * sizeof(int*));
-	int palette4[] = {C41, BLACK, C43, C44, C45, C46, C47, C48,C49,C410,C411};
-	int palette1[] = {C11 ,BLACK, C13, C14, C15, C16, C17, C18,C19,C110,C111};
-	int palette2[] = {C21, BLACK, C23, C24, C25, C26, C27, C28,C29,C210,C211};
-	int palette3[] = {C31, BLACK, C33, C34, C35, C36, C37, C38,C39,C310,C311};
-    palettes[0] = palette1;
-    palettes[1] = palette2;
-    palettes[2] = palette3;
-    palettes[3] = palette4;
-    for (int i = 0;i < 4;i++)
-		for (int j = 0;j < 11;j++)
-			info->palettes[i][j] = palettes[i][j];
-    free(palettes);
-}
-
-void init(t_mlx_info *info)
-{
-	info->mlx_ptr = mlx_init();
-	info->window_ptr = mlx_new_window(info->mlx_ptr, WIDTH, HEIGHT, "fractol 42");
-    info->data.img =  mlx_new_image(info->mlx_ptr, 500, HEIGHT);
-	info->data.addr = mlx_get_data_addr(info->data.img, &info->data.bits_per_pixel, &info->data.line_length,&info->data.endian);
-    init_palettes(info);
-	info->zoom = 1.2;
-	info->height = HEIGHT;
-	info->width = WIDTH;
-	info->offsetx = 0;
-	info->offsety = 0;
-    info->xmax = 2;
-    info->ymax = 2;
-    info->xmin = -2;
-    info->ymin = -2;
-	info->p = 0;
-    // info->fix = CMPLX(0, 0);
-}

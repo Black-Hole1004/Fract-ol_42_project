@@ -1,39 +1,42 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   burningship.c                                      :+:      :+:    :+:   */
+/*   newton.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/01/21 17:03:15 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/01/28 19:24:41 by ahmaymou         ###   ########.fr       */
+/*   Created: 2023/01/28 17:10:17 by ahmaymou          #+#    #+#             */
+/*   Updated: 2023/01/28 18:11:52 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include"fract_ol.h"
+#include "fract_ol.h"
 
-int count_iter_burn(t_cmp c, t_mlx_info *info)
+int count_iter_tricorn(t_cmp c, t_mlx_info *info)
 {
-	t_cmp   new_z;
-    double  temp;
-	int iter;
+	t_cmp           new_z;
+    t_cmp           c1;
+	int             iter;
+    double          temp;
 
     iter = 0;
 	new_z.real = 0;
     new_z.imag = 0;
 	while (iter < info->iter_max)
 	{
+        c1.real = c.real / (c.real*c.real + c.imag*c.imag);
+        c1.imag = c.imag / (c.real*c.real + c.imag*c.imag);
 		if (magnitude(new_z.real, new_z.imag) >= 2)
 			return (iter);
-        temp = new_z.real * new_z.real - new_z.imag * new_z.imag + c.real;
-		new_z.imag = fabs(2 * new_z.real * new_z.imag) + c.imag;
-		new_z.real = temp;
+        temp = new_z.real;
+        new_z.real = new_z.real * new_z.real - new_z.imag * new_z.imag + c1.real;
+		new_z.imag = 2 * new_z.imag * temp - c1.imag;
 		iter++;
 	}
 	return (info->iter_max);
 }
 
-void	draw_burn(t_mlx_info *info)
+void	draw_tricorn(t_mlx_info *info)
 {
 	int     i;
 	int     j;
@@ -48,7 +51,7 @@ void	draw_burn(t_mlx_info *info)
 			while (++j < HEIGHT)
 			{
 				z = convert(i, j, info);
-				iter = count_iter_burn(z, info);
+				iter = count_iter_tricorn(z, info);
                 if (iter == info->iter_max)
                     color = 0;
                 else

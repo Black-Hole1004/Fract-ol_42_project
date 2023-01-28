@@ -6,7 +6,7 @@
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 18:28:39 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/01/21 19:20:32 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/01/28 18:58:49 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,7 +23,7 @@
 # define GREEN          0xff00
 # define LIGHTGREEN		0x90ee90
 # define BLACK          0x0
-
+# define WHITE			0xffffff
 # define ORANGERED1		0xff4500
 # define ORANGERED2     0xee4000
 # define ORANGERED3     0xcd3700
@@ -36,7 +36,10 @@
 # define GREEN          0xff00
 # define LIGHTGREEN		0x90ee90
 # define BLACK          0x0
-
+# define YELLOW         0xffffe0
+# define LIGHTCYAN		0xe0ffff
+# define GRAY			0xcccccc
+# define KHAKI			0xfff68f
 /*========================palette==========================*/
 // # define C1			   0X04ea7d
 // # define C2             0X68efdd	

@@ -6,7 +6,7 @@
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:15:40 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/01/27 23:02:46 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/01/28 19:30:33 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,8 +22,8 @@
 #include "libft/libft.h"
 # include "mlx/mlx.h"
 
-#define HEIGHT 			500
-#define WIDTH 			500
+#define HEIGHT 			800
+#define WIDTH 			1200
 #define DEFAULT_ZOOM 	1
 #define MAX_ITER 		100
 
@@ -34,12 +34,14 @@
 #define Y_MOUSE			0
 
 
-typedef struct	s_cmp {
+typedef struct	s_cmp
+{
 	double	real;
 	double	imag;
 }				t_cmp;
 
-typedef struct	s_data {
+typedef struct	s_data
+{
 	void	*img;
 	char	*addr;
 	int		bits_per_pixel;
@@ -51,37 +53,40 @@ typedef struct s_mlx_info
 {
 	void 		*mlx_ptr;
 	void 		*window_ptr;
-	unsigned int height;
-	unsigned int width;
 	double 		zoom;
-	char		*type;
-	int			mouse_x;
-	int			mouse_y;
+	char		type[15];
 	double		xmin;
 	double		ymin;
 	double		xmax;
 	double		ymax;
 	double		offsetx;
 	double		offsety;
-	int			palettes[4][10];
 	int			p;
 	t_cmp		fix;
 	t_data		data;
+	int			iter_max;
+	int			stop;
 }			t_mlx_info;
 
-void			my_mlx_pixel_put(t_mlx_info *data, int x, int y, int color);
-void			draw_odd(char type[], t_mlx_info *info);
-void			draw_first(void *mlx_ptr, void *window_ptr, char type[], t_mlx_info *info);
+void			draw_tricorn(t_mlx_info *info);
+int				count_iter_tricorn(t_cmp c, t_mlx_info *info);
+int				mouse_move(int x_pos, int y_pos, t_mlx_info *info);
+int				mouse_scroll(int button, int x, int y, t_mlx_info *info);
+int				cross_destroy(void);
+int				destroy(t_mlx_info *info);
+int				change_pal(int key, t_mlx_info *info);
+void    		change_col(int key, t_mlx_info *info);
+void    		change_shape(int key, t_mlx_info *info);
+void			draw_info(t_mlx_info *info);
+void			my_mlx_pixel_put(t_data	*data, int x, int y, int color);
+void			draw_julia(t_mlx_info *info);
 int 			magnitude(double real, double imag);
-int 			deal_key(int key, void *param);
-int 			count_iter_jul(t_cmp c, t_cmp fix);
-int 			count_iter_mand(t_cmp c);
-unsigned int 	get_color(int i);
+int 			count_iter_jul(t_cmp c, t_cmp fix, t_mlx_info *info);
+int 			count_iter_mand(t_cmp c, t_mlx_info *info);
 t_cmp			convert(double x, double y, t_mlx_info *info);
-void			draw(char type[], t_mlx_info *info);
+void			draw_man(t_mlx_info *info);
 void 			init(t_mlx_info *info);
-void			draw_burn(char type[], t_mlx_info *info);
-t_cmp			convert_odd(int x, int y, t_mlx_info *info);
-void    		init_palettes(t_mlx_info *info);
-
+void			draw_burn(t_mlx_info *info);
+void    		draw_shape(t_mlx_info *info);
+void			boundry_init(t_mlx_info *info);
 #endif
