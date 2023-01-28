@@ -6,7 +6,7 @@
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:05:12 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/01/28 19:25:06 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/01/28 19:47:17 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -58,7 +58,7 @@ void    put_strings(t_mlx_info *info)
     mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 370, YELLOW, "LIGHTBLUE        : 5");
     mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 400, YELLOW, "YELLOW           : 6");
     mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 430, YELLOW, "KHAKI            : 7");
-    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 460, YELLOW, "LIGHCYAN         : 8");
+    mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 460, YELLOW, "LIGHTCYAN        : 8");
     mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 490, YELLOW, "GRAY             : 9");
     mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 505, YELLOW, "------------------------------");
     mlx_string_put(info->mlx_ptr, info->window_ptr, 830, 525, YELLOW, "Julia            : j");

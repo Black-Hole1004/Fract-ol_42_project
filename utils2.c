@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   fractol_utils.c                                    :+:      :+:    :+:   */
+/*   utils2.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:11:22 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/01/28 19:25:11 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/01/28 19:52:15 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ void    change_col(int key, t_mlx_info *info)
 
 void    change_shape(int key, t_mlx_info *info)
 {
+    if (key == 46 || key == 38 || key == 11 || key == 17)
+        boundry_init(info);
     if (key == 46)
         ft_strlcpy(info->type, "mandelbrot", 12);
     else if (key == 38)
