@@ -6,7 +6,7 @@
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:11:22 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/01/29 16:53:12 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/01/29 18:09:23 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,15 @@ void	boundry_init(t_mlx_info *info)
 void	init(t_mlx_info *info)
 {
 	info->mlx_ptr = mlx_init();
+	if (!info->mlx_ptr)
+		error_init(0, info);
 	info->window_ptr = mlx_new_window(info->mlx_ptr, WIDTH,
 			HEIGHT, "fractol 42");
+	if (!info->window_ptr)
+		error_init(0, info);
 	info->data.img = mlx_new_image(info->mlx_ptr, 800, HEIGHT);
+	if (!info->data.img)
+		error_init(1, info);
 	info->data.addr = mlx_get_data_addr(info->data.img,
 			&info->data.bits_per_pixel,
 			&info->data.line_length, &info->data.endian);

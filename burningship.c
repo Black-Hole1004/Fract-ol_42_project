@@ -6,7 +6,7 @@
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/21 17:03:15 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/01/29 16:21:25 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/01/29 18:08:52 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,4 +59,12 @@ void	draw_burn(t_mlx_info *info)
 	}
 	mlx_put_image_to_window(info->mlx_ptr, info->window_ptr,
 		info->data.img, 0, 0);
+}
+
+void	error_init(int i, t_mlx_info *info)
+{
+	ft_printf("\033[31mUnable to open window !\n\033[0m");
+	if (i)
+		mlx_destroy_window(info->mlx_ptr, info->window_ptr);
+	exit(1);
 }

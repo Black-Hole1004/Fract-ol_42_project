@@ -6,7 +6,7 @@
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:15:40 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/01/29 17:49:12 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/01/29 18:07:41 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -89,4 +89,5 @@ void	draw_shape(t_mlx_info *info);
 void	boundry_init(t_mlx_info *info);
 void	put_strings2(t_mlx_info *info);
 void	draw_info_back(t_mlx_info *info);
+void	error_init(int i, t_mlx_info *info);
 #endif
