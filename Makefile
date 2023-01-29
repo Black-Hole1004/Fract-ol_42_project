@@ -6,7 +6,7 @@
 #    By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 14:24:42 by ahmaymou          #+#    #+#              #
-#    Updated: 2023/01/27 21:48:22 by ahmaymou         ###   ########.fr        #
+#    Updated: 2023/01/29 17:11:02 by ahmaymou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -14,16 +14,14 @@ NAME = FRACTOL
 
 SRCS_OBJ = $(shell ls | grep .c | grep -v main | grep -v fract)
 SRC = main.c
-SRC_B = main_bonus.c
 
 FLAGS = -Wall -Werror -Wextra
 
 CC = cc
 
-LIBS = libft.a libftprintf.a libmlx.a
+LIBS = libft/libft.a printf/libftprintf.a mlx/libmlx.a
 
 EXEC = fractol
-EXEC_B = bonus
 
 INC_EXC = -I /usr/local/include
 FRAMEWORK = -L /usr/local/lib/ -lmlx -framework OpenGl -framework AppKit
@@ -38,27 +36,21 @@ all : $(NAME)
 $(NAME) : libft_printf prog
 
 libft_printf :
-	@cd libft && make bonus && mv libft.a ..
-	@cd printf && make re && mv libftprintf.a .. && cd ..
-	@cd mlx && make && mv libmlx.a .. && cd ..
+	@make -C libft
+	@make -C printf
+	@make -C mlx
 
 prog :  $(OBJ) fract_ol.h
 	$(CC) $(INC_EXC) $(FLAGS) $(SRC) -Imlx $(FRAMEWORK) $(OBJ) $(LIBS) -o $(EXEC)
 	@rm -rf $(LIBS)
-bonus : $(NAME) bonus_prog
-
-bonus_prog : fract_ol.h
-	$(CC) $(FLAGS) $(SRC_B) $(OBJ) $(LIBS) -o $(EXEC_B)
-	@rm -rf $(LIBS)
 
 clean :
-	@cd libft && make clean
-	@cd printf && make clean
+	@make clean -C libft
+	@make clean -C printf
 	@rm -rf $(OBJ)
 fclean : clean
-	rm -rf $(LIBS) $(EXEC) $(EXEC_B)
+	rm -rf $(LIBS) $(EXEC)
 
 re : fclean all
-re_bonus: fclean bonus
 
-.PHONY : all clean fclean re re_bonus
+.PHONY : all clean fclean re
