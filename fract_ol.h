@@ -6,7 +6,7 @@
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 20:15:40 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/01/29 16:56:02 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/01/29 17:49:12 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,7 +19,7 @@
 # include "colors.h"
 # include "printf/ft_printf.h"
 # include "libft/libft.h"
-# include "mlx/mlx.h"
+# include "mlx.h"
 
 # define HEIGHT 800
 # define WIDTH 1200

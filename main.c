@@ -6,7 +6,7 @@
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:02:02 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/01/29 16:28:57 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/01/29 17:16:54 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ int	pars(char *string, t_mlx_info *info)
 		ft_strlcpy(info->type, "mandelbrot", 12);
 	else if (!ft_strncmp(string, "julia", 6))
 		ft_strlcpy(info->type, "julia", 6);
-	else if (!ft_strncmp(string, "burningship", 6))
+	else if (!ft_strncmp(string, "burningship", 12))
 		ft_strlcpy(info->type, "burningship", 12);
 	else if (!ft_strncmp(string, "tricorn", 8))
 		ft_strlcpy(info->type, "tricorn", 9);
