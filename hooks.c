@@ -6,7 +6,7 @@
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 13:11:56 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/01/29 16:25:51 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/01/29 17:24:37 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,9 +14,11 @@
 
 int	mouse_move(int x_pos, int y_pos, t_mlx_info *info)
 {
-	info->fix = convert(x_pos, y_pos, info);
 	if (!ft_strncmp(info->type, "julia", 6) && !info->stop)
+	{
+		info->fix = convert(x_pos, y_pos, info);
 		draw_shape(info);
+	}
 	return (0);
 }
 
