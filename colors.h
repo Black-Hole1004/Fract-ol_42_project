@@ -6,7 +6,7 @@
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/17 18:28:39 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/01/28 18:58:49 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/01/29 16:21:36 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -113,8 +113,3 @@
 # define C49       0Xccd7ed
 # define C410      0Xe6ebf6
 # define C411      0Xffffff
-struct RGB {
-	unsigned char r;
-	unsigned char g;
-	unsigned char b;
-};

@@ -6,21 +6,21 @@
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/28 13:11:56 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/01/28 19:24:17 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/01/29 16:25:51 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "fract_ol.h"
 
-int mouse_move(int x_pos, int y_pos, t_mlx_info *info)
+int	mouse_move(int x_pos, int y_pos, t_mlx_info *info)
 {
 	info->fix = convert(x_pos, y_pos, info);
-    if (!ft_strncmp(info->type, "julia", 6) && !info->stop)
-	    draw_shape(info);
+	if (!ft_strncmp(info->type, "julia", 6) && !info->stop)
+		draw_shape(info);
 	return (0);
 }
 
-int mouse_scroll(int button, int x, int y, t_mlx_info *info)
+int	mouse_scroll(int button, int x, int y, t_mlx_info *info)
 {
 	double	mouse_y;
 	double	mouse_x;
@@ -62,23 +62,23 @@ int	destroy(t_mlx_info *info)
 
 int	change_pal(int key, t_mlx_info *info)
 {
-    change_col(key, info);
-    change_shape(key, info);
-    if (key == 24)
-    {
-        if (info->iter_max <= 500)
-            info->iter_max += 5;
-    }
-    else if (key == 27)
-    {
-        if (info->iter_max > 5)
-            info->iter_max -= 5;
-    }
-    else if (key == 3)
-    {
-        info->stop++;
-        info->stop = info->stop % 2;
-    }
+	change_col(key, info);
+	change_shape(key, info);
+	if (key == 24)
+	{
+		if (info->iter_max <= 500)
+		info->iter_max += 5;
+	}
+	else if (key == 27)
+	{
+		if (info->iter_max > 5)
+		info->iter_max -= 5;
+	}
+	else if (key == 3)
+	{
+		info->stop++;
+		info->stop = info->stop % 2;
+	}
 	draw_shape(info);
 	return (0);
 }

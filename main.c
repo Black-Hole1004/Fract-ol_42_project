@@ -6,7 +6,7 @@
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:02:02 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/01/28 19:22:44 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/01/29 16:28:57 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,8 @@
 
 void	error(void)
 {
-	ft_printf("\033[31mIncorrect format: ./fractol <Shape name>: mandelbrot, julia, burningship, tricorn !\n\033[0m");
+	ft_printf("\033[31mIncorrect format: ./fractol <Shape name>: mandelbrot,");
+	ft_printf(" julia, burningship, tricorn !\n\033[0m");
 	exit(1);
 }
 
@@ -44,13 +45,14 @@ void	my_mlx_pixel_put(t_data *data, int x, int y, int color)
 	char	*dst;
 
 	dst = data->addr + (y * data->line_length + x * (data->bits_per_pixel / 8));
-	*(unsigned int*)dst = color;
+	*(unsigned int *)dst = color;
 }
 
 void	leaks(void)
 {
 	system("leaks fractol");
 }
+
 int	main(int argc, char **argv)
 {
 	t_mlx_info	info;
