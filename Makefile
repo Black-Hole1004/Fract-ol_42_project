@@ -6,7 +6,7 @@
 #    By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 14:24:42 by ahmaymou          #+#    #+#              #
-#    Updated: 2023/01/29 17:11:02 by ahmaymou         ###   ########.fr        #
+#    Updated: 2023/01/29 17:52:08 by ahmaymou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
@@ -19,7 +19,7 @@ FLAGS = -Wall -Werror -Wextra
 
 CC = cc
 
-LIBS = libft/libft.a printf/libftprintf.a mlx/libmlx.a
+LIBS = libft/libft.a printf/libftprintf.a
 
 EXEC = fractol
 
@@ -31,14 +31,13 @@ OBJ = $(SRCS_OBJ:.c=.o)
 all : $(NAME)
 
 %.o: %.c fract_ol.h
-	@$(CC) $(FLAGS) -Imlx -c $< -o $@
+	$(CC) $(FLAGS) -Imlx -c $< -o $@
 
 $(NAME) : libft_printf prog
 
 libft_printf :
 	@make -C libft
 	@make -C printf
-	@make -C mlx
 
 prog :  $(OBJ) fract_ol.h
 	$(CC) $(INC_EXC) $(FLAGS) $(SRC) -Imlx $(FRAMEWORK) $(OBJ) $(LIBS) -o $(EXEC)

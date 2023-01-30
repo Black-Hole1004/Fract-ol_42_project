@@ -6,7 +6,7 @@
 /*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 15:11:22 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/01/29 18:09:23 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/01/30 20:18:38 by ahmaymou         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,9 +110,11 @@ void	put_strings2(t_mlx_info *info)
 	mlx_string_put(info->mlx_ptr, info->window_ptr,
 		830, 525, YELLOW, "Julia            : j");
 	mlx_string_put(info->mlx_ptr, info->window_ptr,
-		830, 560, YELLOW, "Mandelbrot       : m");
+		830, 550, YELLOW, "Mandelbrot       : m");
 	mlx_string_put(info->mlx_ptr, info->window_ptr,
-		830, 600, YELLOW, "Burninship       : b");
+		830, 580, YELLOW, "Burninship       : b");
 	mlx_string_put(info->mlx_ptr, info->window_ptr,
-		830, 640, YELLOW, "Tricorn          : t");
+		830, 610, YELLOW, "Tricorn          : t");
+	mlx_string_put(info->mlx_ptr, info->window_ptr,
+		830, 640, YELLOW, "freeze Julia     : f");
 }
