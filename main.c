@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   main.c                                             :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+        */
+/*   By: blackhole <blackhole@student.42.fr>        +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2023/01/09 14:02:02 by ahmaymou          #+#    #+#             */
-/*   Updated: 2023/01/29 17:16:54 by ahmaymou         ###   ########.fr       */
+/*   Updated: 2023/01/30 13:05:24 by blackhole        ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,7 +36,6 @@ int	pars(char *string, t_mlx_info *info)
 		ft_strlcpy(info->type, "tricorn", 9);
 	else
 		return (-1);
-	draw_shape(info);
 	return (0);
 }
 
@@ -59,9 +58,9 @@ int	main(int argc, char **argv)
 
 	if (argc != 2)
 		error();
-	init(&info);
 	if (pars(argv[1], &info) == -1)
 		error();
+	init(&info);
 	draw_shape(&info);
 	mlx_key_hook(info.window_ptr, change_pal, &info);
 	mlx_hook(info.window_ptr, 6, 0, mouse_move, &info);
