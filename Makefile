@@ -6,13 +6,13 @@
 #    By: ahmaymou <ahmaymou@student.42.fr>          +#+  +:+       +#+         #
 #                                                 +#+#+#+#+#+   +#+            #
 #    Created: 2023/01/09 14:24:42 by ahmaymou          #+#    #+#              #
-#    Updated: 2023/01/29 17:52:08 by ahmaymou         ###   ########.fr        #
+#    Updated: 2023/02/27 18:17:07 by ahmaymou         ###   ########.fr        #
 #                                                                              #
 # **************************************************************************** #
 
 NAME = FRACTOL
 
-SRCS_OBJ = $(shell ls | grep .c | grep -v main | grep -v fract)
+SRCS_OBJ = $(shell ls | grep .c | grep -v main | grep -v fract | grep -v screenshots)
 SRC = main.c
 
 FLAGS = -Wall -Werror -Wextra
